@@ -3,6 +3,7 @@ run_program("/sbin/busybox","mount","/system");
 
 ui_print("Debloating System")
 delete("/system/app/BasicDreams");
+delete("/system/app/Camera2");
 delete("/system/app/CMWallpapers");
 delete("/system/app/Galaxy4");
 delete("/system/app/HoloSpiralWallpaper");
@@ -16,13 +17,27 @@ delete("/system/app/WhisperPush");
 delete("/system/priv-app/CMAccount");
 delete("/system/priv-app/CMBugReport");
 delete("/system/priv-app/CyanogenSetupWizard");
-ui_print("Extracting Modified System Files")
 
+ui_print("Extracting Modified System Files")
 package_extract_dir("system","/system");
 show_progress(0.400000,0);
+
 show_progress(0.600000,0);
 ui_print("Creating symlinks...");
 show_progress(0.800000,0);
 
 run_program("/sbin/busybox","unmount","/system");
 show_progress(1.000000,0);
+
+delete_recursive("/data/dalvik-cache");
+format("ext4", "EMMC", "/dev/block/platform/msm_sdcc.1/by-name/cache", "0", "/cache");
+assert(unmount("/data"));
+assert(unmount("/system"));
+run_program("/system/xbin/busybox", "fstrim", "-v", "/system");
+run_program("/system/xbin/busybox", "fstrim", "-v", "/data");
+run_program("/system/xbin/busybox", "fstrim", "-v", "/cache");
+
+package_extract_file("boot.img", "/dev/block/platform/msm_sdcc.1/by-name/boot");
+
+
+
