@@ -1,4 +1,5 @@
 run_program("/sbin/busybox","mount","/system");
+ormat("ext4", "EMMC", "/dev/block/platform/msm_sdcc.1/by-name/cache", "0", "/cache"); 
 
 ui_print("Debloating System")
 delete("/system/app/BasicDreams");
