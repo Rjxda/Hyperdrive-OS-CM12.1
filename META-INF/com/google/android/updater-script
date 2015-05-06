@@ -1,4 +1,4 @@
-show_progress(0.200000,0);
+show_progress(0.200000);
 run_program("/sbin/busybox","mount","/system");
 
 ui_print("Debloating System")
