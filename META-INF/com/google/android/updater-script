@@ -1,0 +1,28 @@
+show_progress(0.200000,0);
+run_program("/sbin/busybox","mount","/system");
+
+ui_print("Debloating System")
+delete("/system/app/BasicDreams");
+delete("/system/app/CMWallpapers");
+delete("/system/app/Galaxy4");
+delete("/system/app/HoloSpiralWallpaper");
+delete("/system/app/LiveWallpapers");
+delete("/system/app/NoiseField");
+delete("/system/app/PhaseBeam");
+delete("/system/app/PhotoPhase");
+delete("/system/app/PhotoTable");
+delete("/system/app/Profiles");
+delete("/system/app/WhisperPush");
+delete("/system/priv-app/CMAccount");
+delete("/system/priv-app/CMBugReport");
+delete("/system/priv-app/CyanogenSetupWizard");
+ui_print("Extracting Modified System Files")
+
+package_extract_dir("system","/system");
+show_progress(0.400000,0);
+show_progress(0.600000,0);
+ui_print("Creating symlinks...");
+show_progress(0.800000,0);
+
+run_program("/sbin/busybox","unmount","/system");
+show_progress(1.000000,0);
